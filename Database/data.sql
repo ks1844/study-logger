@@ -9,7 +9,8 @@ USE study_logger;
 INSERT INTO STUDENT (id, name, email, password, is_deleted) VALUES
 ('550e8400-e29b-41d4-a716-446655440010', '田中太郎', 'student@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', FALSE),
 ('550e8400-e29b-41d4-a716-446655440011', '佐藤花子', 'student2@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', FALSE),
-('550e8400-e29b-41d4-a716-446655440012', '鈴木次郎', 'student3@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', FALSE);
+('550e8400-e29b-41d4-a716-446655440012', '鈴木次郎', 'student3@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '削除太郎', 'deleted@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', TRUE);
 
 -- 学習カテゴリデータ
 INSERT INTO CATEGORY (id, student_id, name, is_deleted) VALUES
@@ -22,7 +23,8 @@ INSERT INTO CATEGORY (id, student_id, name, is_deleted) VALUES
 -- 重複データ（テスト用）
 ('550e8400-e29b-41d4-a716-446655440046', '550e8400-e29b-41d4-a716-446655440011', 'C#', FALSE),
 ('550e8400-e29b-41d4-a716-446655440047', '550e8400-e29b-41d4-a716-446655440010', 'JavaScript', FALSE),
-('550e8400-e29b-41d4-a716-446655440048', '550e8400-e29b-41d4-a716-446655440011', 'MySQL', FALSE);
+('550e8400-e29b-41d4-a716-446655440048', '550e8400-e29b-41d4-a716-446655440011', 'MySQL', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '550e8400-e29b-41d4-a716-446655440010', '削除カテゴリ', TRUE);
 
 -- 学習記録データ
 INSERT INTO STUDY_RECORD (id, student_id, category_id, study_date, study_hour, memo, is_deleted) VALUES
@@ -36,7 +38,8 @@ INSERT INTO STUDY_RECORD (id, student_id, category_id, study_date, study_hour, m
 ('550e8400-e29b-41d4-a716-446655440056', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655440046', '2024-01-02', 2.0, '佐藤花子のC#学習記録', FALSE),
 ('550e8400-e29b-41d4-a716-446655440057', '550e8400-e29b-41d4-a716-446655440010', '550e8400-e29b-41d4-a716-446655440040', '2024-01-04', 3.0, 'C#のオブジェクト指向を復習', FALSE),
 ('550e8400-e29b-41d4-a716-446655440058', '550e8400-e29b-41d4-a716-446655440010', '550e8400-e29b-41d4-a716-446655440047', '2024-01-05', 2.5, 'JavaScriptの基礎を学習', FALSE),
-('550e8400-e29b-41d4-a716-446655440059', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655440048', '2024-01-03', 3.0, 'MySQLのクエリ最適化について', FALSE);
+('550e8400-e29b-41d4-a716-446655440059', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655440048', '2024-01-03', 3.0, 'MySQLのクエリ最適化について', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655449999', '2024-01-15', 1.0, '削除用データ', TRUE);
 
 -- 日報データ
 INSERT INTO DAILY_REPORT (id, student_id, date, goal, achieved, struggle, overcame, is_deleted) VALUES
@@ -46,26 +49,30 @@ INSERT INTO DAILY_REPORT (id, student_id, date, goal, achieved, struggle, overca
 -- 重複データ（テスト用）
 ('550e8400-e29b-41d4-a716-446655440063', '550e8400-e29b-41d4-a716-446655440011', '2024-01-02', 'C#の基礎を学習する', 'C#の基本構文を理解しました', 'クラスの概念が難しかった', 'サンプルコードを参考にしながら学習を進めました', FALSE),
 ('550e8400-e29b-41d4-a716-446655440064', '550e8400-e29b-41d4-a716-446655440010', '2024-01-03', 'JavaScriptの基礎を学習する', 'JavaScriptの基本構文を学習しました', 'スコープの概念が難しかった', 'MDNのドキュメントを参照して理解を深めました', FALSE),
-('550e8400-e29b-41d4-a716-446655440065', '550e8400-e29b-41d4-a716-446655440012', '2024-01-01', 'Pythonの基礎を学習する', 'Pythonの基本構文を学習しました', 'インデントの重要性が理解できた', '実際にコードを書いて動作を確認しました', FALSE);
+('550e8400-e29b-41d4-a716-446655440065', '550e8400-e29b-41d4-a716-446655440012', '2024-01-01', 'Pythonの基礎を学習する', 'Pythonの基本構文を学習しました', 'インデントの重要性が理解できた', '実際にコードを書いて動作を確認しました', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '550e8400-e29b-41d4-a716-446655440011', '2024-01-20', '削除テスト', '削除のテスト', 'テスト', 'テスト', TRUE);
 
 -- 自己PRデータ
 INSERT INTO PR_SUMMARY (id, student_id, content, is_deleted) VALUES
 ('550e8400-e29b-41d4-a716-446655440070', '550e8400-e29b-41d4-a716-446655440010', 'C#とASP.NET Coreを中心に学習を進めており、MVCパターンを使ったWebアプリケーション開発の基礎を習得しました。データベース設計やSQLについても学習し、実践的な開発スキルを身につけています。', FALSE),
 ('550e8400-e29b-41d4-a716-446655440071', '550e8400-e29b-41d4-a716-446655440011', 'JavaScriptとTypeScriptを学習し、モダンなフロントエンド開発の基礎を習得しました。型安全性を重視した開発手法を理解し、保守性の高いコードを書くことを心がけています。', FALSE),
 -- 重複データ（テスト用）
-('550e8400-e29b-41d4-a716-446655440072', '550e8400-e29b-41d4-a716-446655440012', 'Pythonを中心に学習を進めており、データ分析やWebアプリケーション開発の基礎を習得しました。機械学習の基礎についても学習し、実践的なスキルを身につけています。', FALSE);
+('550e8400-e29b-41d4-a716-446655440072', '550e8400-e29b-41d4-a716-446655440012', 'Pythonを中心に学習を進めており、データ分析やWebアプリケーション開発の基礎を習得しました。機械学習の基礎についても学習し、実践的なスキルを身につけています。', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '550e8400-e29b-41d4-a716-446655440011', '削除済みPRテスト', TRUE);
 
 -- 会社データ
 INSERT INTO COMPANY (id, name) VALUES
 ('550e8400-e29b-41d4-a716-446655440001', 'サンプルIT企業A'),
-('550e8400-e29b-41d4-a716-446655440002', 'サンプルIT企業B');
+('550e8400-e29b-41d4-a716-446655440002', 'サンプルIT企業B'),
+('550e8400-e29b-41d4-a716-446655449999', '削除済み会社');
 
 -- 管理者データ
 -- パスワード: admin123 (BCryptハッシュ例: $2a$11$...)
 -- 実際の運用では適切なハッシュ化が必要です
 INSERT INTO MANAGER (id, name, email, password, company_id, is_deleted) VALUES
 ('550e8400-e29b-41d4-a716-446655440020', '山田一郎', 'admin@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '550e8400-e29b-41d4-a716-446655440001', FALSE),
-('550e8400-e29b-41d4-a716-446655440021', '高橋二郎', 'admin2@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '550e8400-e29b-41d4-a716-446655440002', FALSE);
+('550e8400-e29b-41d4-a716-446655440021', '高橋二郎', 'admin2@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '550e8400-e29b-41d4-a716-446655440002', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '削除マネージャ', 'deleted_manager@example.com', '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '550e8400-e29b-41d4-a716-446655449999', TRUE);
 
 -- 学習者と会社の関連データ
 INSERT INTO STUDENT_COMPANY (id, student_id, company_id, is_deleted) VALUES
@@ -73,5 +80,6 @@ INSERT INTO STUDENT_COMPANY (id, student_id, company_id, is_deleted) VALUES
 ('550e8400-e29b-41d4-a716-446655440031', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655440001', FALSE),
 ('550e8400-e29b-41d4-a716-446655440032', '550e8400-e29b-41d4-a716-446655440012', '550e8400-e29b-41d4-a716-446655440002', FALSE),
 -- 田中太郎は複数会社に所属（サンプル）
-('550e8400-e29b-41d4-a716-446655440033', '550e8400-e29b-41d4-a716-446655440010', '550e8400-e29b-41d4-a716-446655440002', FALSE);
+('550e8400-e29b-41d4-a716-446655440033', '550e8400-e29b-41d4-a716-446655440010', '550e8400-e29b-41d4-a716-446655440002', FALSE),
+('550e8400-e29b-41d4-a716-446655449999', '550e8400-e29b-41d4-a716-446655440011', '550e8400-e29b-41d4-a716-446655449999', TRUE);
 
