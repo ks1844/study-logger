@@ -9,8 +9,8 @@ erDiagram
         BOOLEAN is_deleted "論理削除フラグ"
     }
 
-    %% ADMIN：管理者
-    ADMIN {
+    %% MANAGER：管理者
+    MANAGER {
         UUID id PK "管理者ID"
         STRING name "管理者名"
         STRING email "メールアドレス"
@@ -73,7 +73,7 @@ erDiagram
 
     STUDENT ||--o{ STUDENT_COMPANY : ""
     COMPANY ||--o{ STUDENT_COMPANY : ""
-    ADMIN ||--o{ COMPANY : ""
+    MANAGER ||--o{ COMPANY : ""
     STUDENT ||--o{ CATEGORY : ""
     STUDENT ||--o{ STUDY_RECORD : ""
     CATEGORY ||--o{ STUDY_RECORD : ""

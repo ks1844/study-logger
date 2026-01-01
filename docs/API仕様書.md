@@ -9,7 +9,7 @@
   "name": "string",
   "email": "string",
   "password": "string",
-  "role": "student|admin"
+  "role": "student|manager"
 }
 - Response: 作成したユーザー情報（id, name, email, role）
 
@@ -21,7 +21,7 @@
   "email": "string",
   "password": "string"
 }
-- Response: トークンとユーザーロール（student|admin）
+- Response: トークンとユーザーロール（student|manager）
 
 ## カテゴリ管理
 ### カテゴリ作成
@@ -144,6 +144,6 @@
 
 ## 管理者機能
 ### 学習者一覧取得
-- URL: /api/admin/studentList
+- URL: /api/manager/studentList
 - Method: GET
 - Response: 管理者が所属する会社に紐づく全学習者の学習状況と自己PR
