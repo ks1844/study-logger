@@ -16,13 +16,14 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category?> GetByIdAsync(Guid id)
     {
-        return await _context.Categories.FindAsync(id);
+        return await _context.Categories
+            .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
     }
 
     public async Task<IEnumerable<Category>> GetByUserIdAsync(Guid userId)
     {
         return await _context.Categories
-            .Where(c => c.UserId == userId)
+            .Where(c => c.UserId == userId && !c.IsDeleted)
             .OrderBy(c => c.Name)
             .ToListAsync();
     }

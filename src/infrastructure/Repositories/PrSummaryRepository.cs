@@ -16,13 +16,14 @@ public class PrSummaryRepository : IPrSummaryRepository
 
     public async Task<PrSummary?> GetByIdAsync(Guid id)
     {
-        return await _context.PrSummaries.FindAsync(id);
+        return await _context.PrSummaries
+            .FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
     }
 
     public async Task<IEnumerable<PrSummary>> GetByUserIdAsync(Guid userId)
     {
         return await _context.PrSummaries
-            .Where(s => s.UserId == userId)
+            .Where(s => s.UserId == userId && !s.IsDeleted)
             .OrderByDescending(s => s.CreatedAt)
             .ToListAsync();
     }

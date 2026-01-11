@@ -74,6 +74,6 @@ public record PrSummaryDto(Guid Id, Guid UserId, string Content, DateTime Create
 
 public record DashboardDto(
     float TodayStudyHours,
-    float WeekStudyHours,
+    float MonthStudyHours,
     List<StudyRecordDto> RecentRecords
 );

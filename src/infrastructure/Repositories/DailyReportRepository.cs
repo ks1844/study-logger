@@ -16,19 +16,20 @@ public class DailyReportRepository : IDailyReportRepository
 
     public async Task<DailyReport?> GetByIdAsync(Guid id)
     {
-        return await _context.DailyReports.FindAsync(id);
+        return await _context.DailyReports
+            .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
     }
 
     public async Task<DailyReport?> GetByUserIdAndDateAsync(Guid userId, DateTime date)
     {
         return await _context.DailyReports
-            .FirstOrDefaultAsync(r => r.UserId == userId && r.Date == date.Date);
+            .FirstOrDefaultAsync(r => r.UserId == userId && r.Date == date.Date && !r.IsDeleted);
     }
 
     public async Task<IEnumerable<DailyReport>> GetByUserIdAsync(Guid userId)
     {
         return await _context.DailyReports
-            .Where(r => r.UserId == userId)
+            .Where(r => r.UserId == userId && !r.IsDeleted)
             .OrderByDescending(r => r.Date)
             .ToListAsync();
     }

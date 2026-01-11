@@ -19,10 +19,10 @@ public class DashboardService
     public async Task<DashboardDto> GetDashboardDataAsync(Guid userId)
     {
         var today = DateTime.Today;
-        var weekStart = today.AddDays(-(int)today.DayOfWeek);
+        var monthStart = new DateTime(today.Year, today.Month, 1);
         
         var todayHours = await _studyRecordRepository.GetTotalHoursByUserIdAndDateAsync(userId, today);
-        var weekHours = await _studyRecordRepository.GetTotalHoursByUserIdAndDateRangeAsync(userId, weekStart, today);
+        var monthHours = await _studyRecordRepository.GetTotalHoursByUserIdAndDateRangeAsync(userId, monthStart, today);
         var recentRecords = await _studyRecordRepository.GetRecentByUserIdAsync(userId, 5);
 
         var recentDtos = new List<StudyRecordDto>();
@@ -40,6 +40,6 @@ public class DashboardService
             ));
         }
 
-        return new DashboardDto(todayHours, weekHours, recentDtos);
+        return new DashboardDto(todayHours, monthHours, recentDtos);
     }
 }

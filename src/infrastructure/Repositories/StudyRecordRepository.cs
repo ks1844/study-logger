@@ -18,14 +18,14 @@ public class StudyRecordRepository : IStudyRecordRepository
     {
         return await _context.StudyRecords
             .Include(r => r.Category)
-            .FirstOrDefaultAsync(r => r.Id == id);
+            .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
     }
 
     public async Task<IEnumerable<StudyRecord>> GetByUserIdAsync(Guid userId)
     {
         return await _context.StudyRecords
             .Include(r => r.Category)
-            .Where(r => r.UserId == userId)
+            .Where(r => r.UserId == userId && !r.IsDeleted)
             .OrderByDescending(r => r.Date)
             .ToListAsync();
     }
@@ -34,7 +34,7 @@ public class StudyRecordRepository : IStudyRecordRepository
     {
         return await _context.StudyRecords
             .Include(r => r.Category)
-            .Where(r => r.UserId == userId && r.Date >= startDate && r.Date <= endDate)
+            .Where(r => r.UserId == userId && r.Date >= startDate && r.Date <= endDate && !r.IsDeleted)
             .OrderByDescending(r => r.Date)
             .ToListAsync();
     }
@@ -43,7 +43,7 @@ public class StudyRecordRepository : IStudyRecordRepository
     {
         return await _context.StudyRecords
             .Include(r => r.Category)
-            .Where(r => r.UserId == userId)
+            .Where(r => r.UserId == userId && !r.IsDeleted)
             .OrderByDescending(r => r.Date)
             .Take(count)
             .ToListAsync();
@@ -65,14 +65,14 @@ public class StudyRecordRepository : IStudyRecordRepository
     public async Task<float> GetTotalHoursByUserIdAndDateAsync(Guid userId, DateTime date)
     {
         return await _context.StudyRecords
-            .Where(r => r.UserId == userId && r.Date == date.Date)
+            .Where(r => r.UserId == userId && r.Date == date.Date && !r.IsDeleted)
             .SumAsync(r => r.StudyHour);
     }
 
     public async Task<float> GetTotalHoursByUserIdAndDateRangeAsync(Guid userId, DateTime startDate, DateTime endDate)
     {
         return await _context.StudyRecords
-            .Where(r => r.UserId == userId && r.Date >= startDate && r.Date <= endDate)
+            .Where(r => r.UserId == userId && r.Date >= startDate && r.Date <= endDate && !r.IsDeleted)
             .SumAsync(r => r.StudyHour);
     }
 }
