@@ -7,8 +7,28 @@
 <div class="container mt-4">
     <div class="row mb-4">
         <div class="col-12">
-            <h1>ダッシュボード</h1>
-            <p>ようこそ、<strong>@Model.UserName</strong>さん (@Model.UserRole)</p>
+            @if (Model.IsReadOnly)
+            {
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h1>ダッシュボード (閲覧モード)</h1>
+                        <p>閲覧中の学生: <strong>@Model.ViewingStudentName</strong>さん</p>
+                    </div>
+                    <div>
+                        <a href="/StudentSelect" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> 学生選択に戻る
+                        </a>
+                    </div>
+                </div>
+                <div class="alert alert-info">
+                    <i class="bi bi-eye"></i> 管理者として閲覧しています。編集はできません。
+                </div>
+            }
+            else
+            {
+                <h1>ダッシュボード</h1>
+                <p>ようこそ、<strong>@Model.UserName</strong>さん (@Model.UserRole)</p>
+            }
         </div>
     </div>
 
@@ -71,48 +91,54 @@
         </div>
     </div>
 
-    <div class="row mb-4">
-        <div class="col-md-3 mb-2">
-            <a href="/StudyRecord" class="btn btn-primary w-100">学習記録一覧</a>
+    @if (!Model.IsReadOnly)
+    {
+        <div class="row mb-4">
+            <div class="col-md-3 mb-2">
+                <a href="/StudyRecord" class="btn btn-primary w-100">学習記録一覧</a>
+            </div>
+            <div class="col-md-3 mb-2">
+                <a href="/Category" class="btn btn-secondary w-100">カテゴリ一覧</a>
+            </div>
+            <div class="col-md-3 mb-2">
+                <button class="btn btn-info w-100" data-bs-toggle="modal" data-bs-target="#dailyReportModal">日報作成</button>
+            </div>
+            <div class="col-md-3 mb-2">
+                <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#prGenerateModal">PR生成</button>
+            </div>
         </div>
-        <div class="col-md-3 mb-2">
-            <a href="/Category" class="btn btn-secondary w-100">カテゴリ一覧</a>
-        </div>
-        <div class="col-md-3 mb-2">
-            <button class="btn btn-info w-100" data-bs-toggle="modal" data-bs-target="#dailyReportModal">日報作成</button>
-        </div>
-        <div class="col-md-3 mb-2">
-            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#prGenerateModal">PR生成</button>
-        </div>
-    </div>
+    }
 </div>
 
-<!-- 日報作成モーダル (仮実装) -->
-<div class="modal fade" id="dailyReportModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">日報作成</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>日報作成機能は準備中です</p>
+@if (!Model.IsReadOnly)
+{
+    <!-- 日報作成モーダル (仮実装) -->
+    <div class="modal fade" id="dailyReportModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">日報作成</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>日報作成機能は準備中です</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- PR生成モーダル (仮実装) -->
-<div class="modal fade" id="prGenerateModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">PR生成</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>PR生成機能は準備中です</p>
+    <!-- PR生成モーダル (仮実装) -->
+    <div class="modal fade" id="prGenerateModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">PR生成</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>PR生成機能は準備中です</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}

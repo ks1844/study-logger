@@ -36,6 +36,15 @@ public class UserRepository : IUserRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<User>> GetStudentsByCompanyIdAsync(Guid companyId)
+    {
+        return await _context.Users
+            .Include(u => u.Company)
+            .Where(u => u.CompanyId == companyId && u.Role == "student" && !u.IsDeleted)
+            .OrderBy(u => u.Name)
+            .ToListAsync();
+    }
+
     public async Task<User> CreateAsync(User user)
     {
         _context.Users.Add(user);
