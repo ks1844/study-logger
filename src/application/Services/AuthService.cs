@@ -25,6 +25,10 @@ public class AuthService
         if (!_passwordHasher.VerifyPassword(loginDto.Password, user.PasswordHash))
             return null;
 
+        // ロールのチェック
+        if (user.Role != loginDto.Role)
+            return null;
+
         return new UserDto(
             user.Id,
             user.Name,

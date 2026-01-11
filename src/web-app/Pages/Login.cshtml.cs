@@ -23,6 +23,9 @@ public class LoginModel : PageModel
     [BindProperty]
     public string Password { get; set; } = string.Empty;
 
+    [BindProperty]
+    public string Role { get; set; } = string.Empty;
+
     public string? ErrorMessage { get; set; }
 
     public void OnGet()
@@ -31,18 +34,25 @@ public class LoginModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Role))
         {
-            ErrorMessage = "メールアドレスとパスワードを入力してください";
+            ErrorMessage = "メールアドレス、パスワード、ロールを入力してください";
             return Page();
         }
 
-        var loginDto = new LoginDto(Email, Password);
+        // ロールの検証
+        if (Role != "student" && Role != "admin")
+        {
+            ErrorMessage = "無効なロールです";
+            return Page();
+        }
+
+        var loginDto = new LoginDto(Email, Password, Role);
         var user = await _authService.LoginAsync(loginDto);
 
         if (user == null)
         {
-            ErrorMessage = "メールアドレスまたはパスワードが正しくありません";
+            ErrorMessage = "メールアドレス、パスワード、またはロールが正しくありません";
             return Page();
         }
 

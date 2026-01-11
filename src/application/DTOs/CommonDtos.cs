@@ -1,6 +1,6 @@
 namespace Application.DTOs;
 
-public record LoginDto(string Email, string Password);
+public record LoginDto(string Email, string Password, string Role);
 
 public record UserDto(
     Guid Id,
