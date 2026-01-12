@@ -1,0 +1,174 @@
+@page
+@model web_app.Pages.DailyReportModel
+@{
+    ViewData["Title"] = "日報一覧";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>日報一覧</h1>
+            <a href="/Dashboard" class="btn btn-secondary">ダッシュボードに戻る</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                新規日報作成
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.DailyReports.Any())
+                    {
+                        <div class="accordion" id="reportAccordion">
+                            @foreach (var report in Model.DailyReports)
+                            {
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading-@report.Id">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@report.Id" aria-expanded="false" aria-controls="collapse-@report.Id">
+                                            <strong>@report.Date.ToString("yyyy年MM月dd日（ddd）")</strong>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-@report.Id" class="accordion-collapse collapse" aria-labelledby="heading-@report.Id" data-bs-parent="#reportAccordion">
+                                        <div class="accordion-body">
+                                            <div class="mb-3">
+                                                <h6 class="text-primary">今日の目標</h6>
+                                                <p class="ms-3">@report.Goal</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6 class="text-success">達成したこと</h6>
+                                                <p class="ms-3">@report.Achieved</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6 class="text-warning">苦戦したこと</h6>
+                                                <p class="ms-3">@report.Struggle</p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6 class="text-info">苦戦をどのように乗り越えたか</h6>
+                                                <p class="ms-3">@report.Overcame</p>
+                                            </div>
+                                            <div class="text-end">
+                                                <button class="btn btn-sm btn-warning" 
+                                                        onclick='openEditModal(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(report)))'>
+                                                    編集
+                                                </button>
+                                                <form method="post" asp-page-handler="Delete" style="display:inline;">
+                                                    <input type="hidden" name="id" value="@report.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger" 
+                                                            onclick="return confirm('削除してもよろしいですか?')">
+                                                        削除
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">日報がまだありません。新規作成してください。</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 作成モーダル -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Create">
+                <div class="modal-header">
+                    <h5 class="modal-title">日報作成</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Date" class="form-label">日付</label>
+                        <input type="date" class="form-control" id="Date" name="Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Goal" class="form-label">今日の目標</label>
+                        <textarea class="form-control" id="Goal" name="Goal" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Achieved" class="form-label">達成したこと</label>
+                        <textarea class="form-control" id="Achieved" name="Achieved" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Struggle" class="form-label">苦戦したこと</label>
+                        <textarea class="form-control" id="Struggle" name="Struggle" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Overcame" class="form-label">苦戦をどのように乗り越えたか</label>
+                        <textarea class="form-control" id="Overcame" name="Overcame" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Update">
+                <div class="modal-header">
+                    <h5 class="modal-title">日報編集</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="EditReportId" name="EditReportId" />
+                    <div class="mb-3">
+                        <label for="EditDate" class="form-label">日付</label>
+                        <input type="date" class="form-control" id="EditDate" name="Date" required readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="EditGoal" class="form-label">今日の目標</label>
+                        <textarea class="form-control" id="EditGoal" name="Goal" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="EditAchieved" class="form-label">達成したこと</label>
+                        <textarea class="form-control" id="EditAchieved" name="Achieved" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="EditStruggle" class="form-label">苦戦したこと</label>
+                        <textarea class="form-control" id="EditStruggle" name="Struggle" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="EditOvercame" class="form-label">苦戦をどのように乗り越えたか</label>
+                        <textarea class="form-control" id="EditOvercame" name="Overcame" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">更新</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function openEditModal(report) {
+        document.getElementById('EditReportId').value = report.Id;
+        document.getElementById('EditDate').value = report.Date.split('T')[0];
+        document.getElementById('EditGoal').value = report.Goal;
+        document.getElementById('EditAchieved').value = report.Achieved;
+        document.getElementById('EditStruggle').value = report.Struggle;
+        document.getElementById('EditOvercame').value = report.Overcame;
+        var modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    }
+</script>
+}
