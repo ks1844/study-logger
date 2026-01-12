@@ -16,7 +16,8 @@ public class CompanyRepository : ICompanyRepository
 
     public async Task<Company?> GetByIdAsync(Guid id)
     {
-        return await _context.Companies.FindAsync(id);
+        return await _context.Companies
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<IEnumerable<Company>> GetAllAsync()
