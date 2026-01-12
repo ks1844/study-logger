@@ -39,6 +39,10 @@ public class AuthService
         );
     }
 
+    /// <summary>
+    /// 新規ユーザーの登録
+    /// 注意: 現在この機能を呼び出す画面は未実装です
+    /// </summary>
     public async Task<UserDto> RegisterAsync(string name, string email, string password, string role, Guid companyId)
     {
         if (await _userRepository.EmailExistsAsync(email))
