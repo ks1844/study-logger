@@ -1,0 +1,48 @@
+@page
+@model web_app.Pages.StudentSelectModel
+@{
+    ViewData["Title"] = "学生選択";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>学生選択</h1>
+            <p>ようこそ、<strong>@Model.UserName</strong>さん (管理者)</p>
+            <p class="text-muted">閲覧したい学生を選択してください</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>学生一覧</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Students.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var student in Model.Students)
+                            {
+                                <a href="/Dashboard?studentId=@student.Id" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">@student.Name</h5>
+                                        <small class="text-muted">@student.Email</small>
+                                    </div>
+                                    <p class="mb-1 text-muted">会社: @student.Company?.Name</p>
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> 登録されている学生がいません
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+@page
+@model web_app.Pages.CategoryModel
+@{
+    ViewData["Title"] = "カテゴリ一覧";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>カテゴリ一覧</h1>
+            <a href="/Dashboard" class="btn btn-secondary">ダッシュボードに戻る</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                新規カテゴリ作成
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Categories.Any())
+                    {
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>カテゴリ名</th>
+                                    <th style="width: 150px;">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <tr>
+                                        <td>@category.Name</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning" 
+                                                    onclick="openEditModal(@category.Id, '@category.Name')">
+                                                編集
+                                            </button>
+                                            <form method="post" asp-page-handler="Delete" style="display:inline;">
+                                                <input type="hidden" name="id" value="@category.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" 
+                                                        onclick="return confirm('削除してもよろしいですか?')">
+                                                    削除
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted">カテゴリがまだありません。新規作成してください。</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 作成モーダル -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Create">
+                <div class="modal-header">
+                    <h5 class="modal-title">カテゴリ作成</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="CategoryName" class="form-label">カテゴリ名</label>
+                        <input type="text" class="form-control" id="CategoryName" name="CategoryName" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Update">
+                <div class="modal-header">
+                    <h5 class="modal-title">カテゴリ編集</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="EditCategoryId" name="EditCategoryId" />
+                    <div class="mb-3">
+                        <label for="EditCategoryName" class="form-label">カテゴリ名</label>
+                        <input type="text" class="form-control" id="EditCategoryName" name="CategoryName" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">更新</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function openEditModal(id, name) {
+        document.getElementById('EditCategoryId').value = id;
+        document.getElementById('EditCategoryName').value = name;
+        var modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    }
+</script>
+}
