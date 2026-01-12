@@ -14,7 +14,6 @@ public class AppDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<StudyRecord> StudyRecords { get; set; }
     public DbSet<DailyReport> DailyReports { get; set; }
-    public DbSet<PrSummary> PrSummaries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -113,24 +112,6 @@ public class AppDbContext : DbContext
                 .HasForeignKey(e => e.UserId);
 
             entity.HasIndex(e => new { e.UserId, e.Date }).IsUnique();
-            entity.HasQueryFilter(e => !e.IsDeleted);
-        });
-
-        // PrSummary Entity
-        modelBuilder.Entity<PrSummary>(entity =>
-        {
-            entity.ToTable("pr_summary");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Id).HasColumnName("id").HasColumnType("CHAR(36)");
-            entity.Property(e => e.UserId).HasColumnName("user_id").HasColumnType("CHAR(36)");
-            entity.Property(e => e.Content).HasColumnName("content").IsRequired();
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-
-            entity.HasOne(e => e.User)
-                .WithMany(u => u.PrSummaries)
-                .HasForeignKey(e => e.UserId);
-
             entity.HasQueryFilter(e => !e.IsDeleted);
         });
     }

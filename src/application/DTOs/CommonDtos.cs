@@ -68,10 +68,6 @@ public record DailyReportDto(
     string Overcame
 );
 
-public record CreatePrSummaryDto(Guid UserId, string Content);
-public record UpdatePrSummaryDto(Guid Id, string Content);
-public record PrSummaryDto(Guid Id, Guid UserId, string Content, DateTime CreatedAt);
-
 public record DashboardDto(
     float TodayStudyHours,
     float MonthStudyHours,

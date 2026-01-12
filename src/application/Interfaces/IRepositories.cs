@@ -49,11 +49,3 @@ public interface IDailyReportRepository
     Task<DailyReport> CreateAsync(DailyReport report);
     Task UpdateAsync(DailyReport report);
 }
-
-public interface IPrSummaryRepository
-{
-    Task<PrSummary?> GetByIdAsync(Guid id);
-    Task<IEnumerable<PrSummary>> GetByUserIdAsync(Guid userId);
-    Task<PrSummary> CreateAsync(PrSummary summary);
-    Task UpdateAsync(PrSummary summary);
-}

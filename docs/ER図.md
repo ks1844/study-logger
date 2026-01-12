@@ -2,7 +2,6 @@ erDiagram
 
     USER ||--o{ STUDY_RECORD : "1対多"
     USER ||--o{ DAILY_REPORT : "1対多"
-    USER ||--o{ PR_SUMMARY : "1対多"
     USER ||--o{ CATEGORY : "1対多"
 
     COMPANY ||--o{ USER : "1対多"
@@ -49,12 +48,5 @@ erDiagram
         string achieved "達成したこと"
         string struggle "苦戦したこと"
         string overcame "どう乗り越えたか"
-        bool is_deleted "削除フラグ"
-    }
-
-    PR_SUMMARY {
-        int id PK "PR ID"
-        int user_id FK "ユーザーID"
-        string content "PR本文"
         bool is_deleted "削除フラグ"
     }

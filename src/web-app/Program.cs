@@ -22,17 +22,14 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IStudyRecordRepository, StudyRecordRepository>();
 builder.Services.AddScoped<IDailyReportRepository, DailyReportRepository>();
-builder.Services.AddScoped<IPrSummaryRepository, PrSummaryRepository>();
 
 // Services
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-builder.Services.AddScoped<IAiService, AiService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<StudyRecordService>();
 builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<DailyReportService>();
-builder.Services.AddScoped<PrSummaryService>();
 
 // Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

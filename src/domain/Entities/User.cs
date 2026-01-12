@@ -15,7 +15,6 @@ public class User
     public ICollection<Category> Categories { get; private set; } = new List<Category>();
     public ICollection<StudyRecord> StudyRecords { get; private set; } = new List<StudyRecord>();
     public ICollection<DailyReport> DailyReports { get; private set; } = new List<DailyReport>();
-    public ICollection<PrSummary> PrSummaries { get; private set; } = new List<PrSummary>();
 
     // EF Core用のプライベートコンストラクタ
     private User() { }

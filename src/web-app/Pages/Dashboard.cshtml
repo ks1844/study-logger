@@ -94,36 +94,15 @@
     @if (!Model.IsReadOnly)
     {
         <div class="row mb-4">
-            <div class="col-md-3 mb-2">
+            <div class="col-md-4 mb-2">
                 <a href="/StudyRecord" class="btn btn-primary w-100">学習記録一覧</a>
             </div>
-            <div class="col-md-3 mb-2">
+            <div class="col-md-4 mb-2">
                 <a href="/Category" class="btn btn-secondary w-100">カテゴリ一覧</a>
             </div>
-            <div class="col-md-3 mb-2">
+            <div class="col-md-4 mb-2">
                 <a href="/DailyReport" class="btn btn-info w-100">日報一覧</a>
-            </div>
-            <div class="col-md-3 mb-2">
-                <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#prGenerateModal">PR生成</button>
             </div>
         </div>
     }
 </div>
-
-@if (!Model.IsReadOnly)
-{
-    <!-- PR生成モーダル (仮実装) -->
-    <div class="modal fade" id="prGenerateModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">PR生成</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>PR生成機能は準備中です</p>
-                </div>
-            </div>
-        </div>
-    </div>
-}
