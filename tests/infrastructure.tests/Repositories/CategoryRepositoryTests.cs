@@ -167,11 +167,11 @@ public class CategoryRepositoryTests
         context.Companies.Add(company);
         context.Users.Add(user);
         
-        var category1 = new Category(userId, "数学");
+        var category1 = new Category(userId, "Python");
         SetId(category1, Guid.NewGuid());
-        var category2 = new Category(userId, "英語");
+        var category2 = new Category(userId, "JavaScript");
         SetId(category2, Guid.NewGuid());
-        var category3 = new Category(userId, "国語");
+        var category3 = new Category(userId, "CSharp");
         SetId(category3, Guid.NewGuid());
         context.Categories.AddRange(category1, category2, category3);
         await context.SaveChangesAsync();
@@ -181,9 +181,9 @@ public class CategoryRepositoryTests
 
         // 検証
         var categoryList = result.ToList();
-        categoryList[0].Name.Should().Be("英語");
-        categoryList[1].Name.Should().Be("国語");
-        categoryList[2].Name.Should().Be("数学");
+        categoryList[0].Name.Should().Be("CSharp");
+        categoryList[1].Name.Should().Be("JavaScript");
+        categoryList[2].Name.Should().Be("Python");
     }
 
     [Fact]
