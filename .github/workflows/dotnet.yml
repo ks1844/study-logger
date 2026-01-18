@@ -20,16 +20,16 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --verbosity detailed
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --no-restore --configuration Release --verbosity detailed
 
     - name: Run Application Tests
-      run: dotnet test tests/application.tests/application.tests.csproj --no-build --verbosity normal --configuration Release
+      run: dotnet test tests/application.tests/application.tests.csproj --no-build --configuration Release --verbosity detailed --logger "console;verbosity=detailed"
 
     - name: Run Domain Tests
-      run: dotnet test tests/domain.tests/domain.tests.csproj --no-build --verbosity normal --configuration Release
+      run: dotnet test tests/domain.tests/domain.tests.csproj --no-build --configuration Release --verbosity detailed --logger "console;verbosity=detailed"
 
     - name: Run Infrastructure Tests
-      run: dotnet test tests/infrastructure.tests/infrastructure.tests.csproj --no-build --verbosity normal --configuration Release
+      run: dotnet test tests/infrastructure.tests/infrastructure.tests.csproj --no-build --configuration Release --verbosity detailed --logger "console;verbosity=detailed"
