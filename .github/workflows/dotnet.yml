@@ -1,0 +1,35 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [ main, dev/mvp ]
+  pull_request:
+    branches: [ main, dev/mvp ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run Application Tests
+      run: dotnet test tests/application.tests/application.tests.csproj --no-build --verbosity normal --configuration Release
+
+    - name: Run Domain Tests
+      run: dotnet test tests/domain.tests/domain.tests.csproj --no-build --verbosity normal --configuration Release
+
+    - name: Run Infrastructure Tests
+      run: dotnet test tests/infrastructure.tests/infrastructure.tests.csproj --no-build --verbosity normal --configuration Release
